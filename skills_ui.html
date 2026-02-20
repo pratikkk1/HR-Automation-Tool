@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HR Automation - Required Skills</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.3);
+            max-width: 500px;
+            width: 100%;
+            padding: 40px;
+        }
+
+        h1 {
+            color: #2d3748;
+            margin-bottom: 10px;
+            font-size: 28px;
+        }
+
+        .subtitle {
+            color: #718096;
+            margin-bottom: 30px;
+            font-size: 14px;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+            color: #2d3748;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .input-group {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+
+        input[type="text"] {
+            flex: 1;
+            padding: 12px 15px;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        input[type="text"]:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .add-btn {
+            padding: 12px 20px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 14px;
+            white-space: nowrap;
+        }
+
+        .add-btn:hover {
+            background: #5a67d8;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+        }
+
+        .skills-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            min-height: 40px;
+        }
+
+        .skill-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: #edf2f7;
+            border: 2px solid #667eea;
+            color: #667eea;
+            padding: 8px 12px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 500;
+            animation: slideIn 0.3s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .skill-tag button {
+            background: none;
+            border: none;
+            color: #e53e3e;
+            cursor: pointer;
+            font-size: 16px;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            transition: transform 0.2s ease;
+        }
+
+        .skill-tag button:hover {
+            transform: scale(1.2);
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 15px;
+        }
+
+        .submit-btn:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        .submit-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .loading {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .spinner {
+            width: 16px;
+            height: 16px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .message {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            display: none;
+            animation: slideDown 0.3s ease-out;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .message.show {
+            display: block;
+        }
+
+        .message.success {
+            background: #c6f6d5;
+            color: #22543d;
+            border: 2px solid #9ae6b4;
+        }
+
+        .message.error {
+            background: #fed7d7;
+            color: #742a2a;
+            border: 2px solid #fc8181;
+        }
+
+        .output-section {
+            margin-top: 30px;
+            padding-top: 30px;
+            border-top: 2px solid #e2e8f0;
+            display: none;
+        }
+
+        .output-section.show {
+            display: block;
+            animation: slideDown 0.3s ease-out;
+        }
+
+        .output-title {
+            color: #2d3748;
+            font-weight: 700;
+            margin-bottom: 15px;
+            font-size: 16px;
+        }
+
+        .output-box {
+            background: #f7fafc;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 15px;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            color: #2d3748;
+            line-height: 1.6;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .output-box pre {
+            margin: 0;
+            white-space: pre-wrap;
+            word-break: break-word;
+        }
+
+        .threshold-group {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .threshold-input {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .threshold-input label {
+            margin-bottom: 8px;
+        }
+
+        .threshold-input input {
+            padding: 10px 12px;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 14px;
+        }
+
+        .threshold-input input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .info-box {
+            background: #edf2f7;
+            border-left: 4px solid #667eea;
+            padding: 12px 15px;
+            border-radius: 6px;
+            font-size: 13px;
+            color: #2d3748;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚀 HR Automation</h1>
+        <p class="subtitle">Configure Required Skills & Settings</p>
+
+        <div class="info-box">
+            💡 Update required skills and threshold, then run email processing
+        </div>
+
+        <form id="skillsForm">
+            <!-- Required Skills Section -->
+            <div class="form-group">
+                <label>Required Skills <span style="color: #e53e3e;">*</span></label>
+                <div class="input-group">
+                    <input type="text" id="skillInput" placeholder="e.g., Python, Machine Learning" autocomplete="off">
+                    <button type="button" class="add-btn" onclick="addSkill()">Add</button>
+                </div>
+                <div class="skills-list" id="skillsList"></div>
+            </div>
+
+            <!-- Threshold Section -->
+            <div class="threshold-group">
+                <div class="threshold-input">
+                    <label for="threshold">Match Threshold (%)</label>
+                    <input type="number" id="threshold" value="60" min="0" max="100">
+                </div>
+            </div>
+
+            <!-- Submit Button -->
+            <button type="submit" class="submit-btn" id="submitBtn">
+                <span class="btn-text">Update & Run Email Processing</span>
+                <span class="spinner" style="display:none;"></span>
+            </button>
+
+            <!-- Message -->
+            <div class="message" id="message"></div>
+        </form>
+
+        <!-- Output Section -->
+        <div class="output-section" id="outputSection">
+            <div class="output-title">📊 Processing Output</div>
+            <div class="output-box">
+                <pre id="outputContent"></pre>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let skills = ["python", "sql", "machine learning"];
+
+        // Render initial skills
+        renderSkills();
+
+        function addSkill() {
+            const input = document.getElementById('skillInput');
+            const skillText = input.value.trim().toLowerCase();
+
+            if (!skillText) {
+                showMessage('Please enter a skill', 'error');
+                return;
+            }
+
+            if (skills.includes(skillText)) {
+                showMessage('Skill already added', 'error');
+                return;
+            }
+
+            skills.push(skillText);
+            input.value = '';
+            renderSkills();
+            input.focus();
+        }
+
+        function removeSkill(skill) {
+            if (skills.length === 1) {
+                showMessage('Keep at least one skill', 'error');
+                return;
+            }
+            skills = skills.filter(s => s !== skill);
+            renderSkills();
+        }
+
+        function renderSkills() {
+            const skillsList = document.getElementById('skillsList');
+            skillsList.innerHTML = skills.map(skill => `
+                <div class="skill-tag">
+                    ${skill}
+                    <button type="button" onclick="removeSkill('${skill}')">✕</button>
+                </div>
+            `).join('');
+        }
+
+        // Add skill on Enter key
+        document.getElementById('skillInput').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                addSkill();
+            }
+        });
+
+        // Form submission
+        document.getElementById('skillsForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            if (skills.length === 0) {
+                showMessage('Add at least one skill', 'error');
+                return;
+            }
+
+            const threshold = parseInt(document.getElementById('threshold').value);
+
+            if (threshold < 0 || threshold > 100) {
+                showMessage('Threshold must be between 0-100', 'error');
+                return;
+            }
+
+            // Show loading state
+            const submitBtn = document.getElementById('submitBtn');
+            const btnText = submitBtn.querySelector('.btn-text');
+            const spinner = submitBtn.querySelector('.spinner');
+            
+            submitBtn.disabled = true;
+            btnText.style.display = 'none';
+            spinner.style.display = 'inline-flex';
+
+            try {
+                const response = await fetch('http://localhost:5000/api/process-emails', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        skills: skills,
+                        threshold: threshold
+                    })
+                });
+
+                const result = await response.json();
+
+                if (response.ok) {
+                    showMessage('✓ Skills updated & processing complete!', 'success');
+                    showOutput(result.output || 'Processing completed successfully');
+                } else {
+                    showMessage(result.message || 'Error processing emails', 'error');
+                    if (result.output) {
+                        showOutput(result.output);
+                    }
+                }
+            } catch (error) {
+                showMessage('Error: Make sure backend is running on http://localhost:5000', 'error');
+                console.error('Error:', error);
+            } finally {
+                submitBtn.disabled = false;
+                btnText.style.display = 'inline';
+                spinner.style.display = 'none';
+            }
+        });
+
+        function showMessage(text, type) {
+            const messageEl = document.getElementById('message');
+            messageEl.textContent = text;
+            messageEl.className = `message ${type} show`;
+
+            setTimeout(() => {
+                messageEl.classList.remove('show');
+            }, 5000);
+        }
+
+        function showOutput(output) {
+            const outputSection = document.getElementById('outputSection');
+            const outputContent = document.getElementById('outputContent');
+            outputContent.textContent = output;
+            outputSection.classList.add('show');
+        }
+    </script>
+</body>
+</html>
