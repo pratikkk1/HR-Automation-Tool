@@ -1,0 +1,8 @@
+flask
+os
+re
+datetime
+imaplib
+PyPDF2
+email.mime.text
+twilio.rest
